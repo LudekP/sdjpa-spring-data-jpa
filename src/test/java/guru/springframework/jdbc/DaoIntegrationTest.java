@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -42,9 +43,8 @@ public class DaoIntegrationTest {
         bookDao.deleteBookById(saved.getId());
 
         assertThrows(JpaObjectRetrievalFailureException.class, () -> {
-            Book deleted = bookDao.getById(saved.getId());
+            bookDao.getById(saved.getId());
         });
-
     }
 
     @Test
@@ -57,7 +57,6 @@ public class DaoIntegrationTest {
         Author author = new Author();
         author.setId(3L);
 
-        //book.setAuthor(author);
         Book saved = bookDao.saveNewBook(book);
 
         saved.setTitle("New Book");
@@ -78,7 +77,6 @@ public class DaoIntegrationTest {
         Author author = new Author();
         author.setId(3L);
 
-        //book.setAuthor(author);
         Book saved = bookDao.saveNewBook(book);
 
         assertThat(saved).isNotNull();

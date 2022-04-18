@@ -18,13 +18,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "SELECT * FROM book WHERE title = :title", nativeQuery = true)
     Book findBookByTitleNativeQuery(@Param("title") String title);
 
-    @Query("SELECT b FROM Book b WHERE b.title = :title")
+    @Query("SELECT b FROM Book b where b.title = :title")
     Book findBookByTitleWithQueryNamed(@Param("title") String title);
 
-    @Query("SELECT b FROM Book b WHERE b.title = ?1")
+    @Query("SELECT b FROM Book b where b.title = ?1")
     Book findBookByTitleWithQuery(String title);
 
-    Optional<Book> findByTitle(String title);
+    Optional<Book> findBookByTitle(String title);
 
     Book readByTitle(String title);
 
@@ -35,6 +35,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Async
     Future<Book> queryByTitle(String title);
-
-
 }
